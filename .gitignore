@@ -16,6 +16,8 @@ build/
 # backup related
 backup/
 data.sqlite
+migrations/
+migrations_test/
 
 .vscode/
 
