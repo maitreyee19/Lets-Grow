@@ -1,0 +1,1 @@
+from .grapql_schema import schema 
