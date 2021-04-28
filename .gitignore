@@ -12,3 +12,12 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+# backup related
+backup/
+data.sqlite
+
+.vscode/
+
+# mac related files
+.DS_Store
