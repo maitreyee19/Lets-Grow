@@ -1,6 +1,7 @@
 import graphene
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 from flask_graphql import GraphQLView
+from ..service.db_connect import db
 from ..model import Post
 from ..model import User
 
