@@ -9,12 +9,19 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious_secret_key')
     DEBUG = False
 
-
 class DevelopmentConfig(Config):
     # uncomment the line below to use postgres
-    # SQLALCHEMY_DATABASE_URI = postgres_local_base
+    # SQLALCHEMY_DATABASE_URI = "postgresql://lony:lony@192.168.0.165:5432/postgres"
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '../data.sqlite')
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    
+class IntegrationConfig(Config):
+    # uncomment the line below to use postgres
+    SQLALCHEMY_DATABASE_URI = "postgresql://lony:lony@192.168.0.165:5432/postgres"
+    DEBUG = True
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '../data.sqlite')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
@@ -35,6 +42,7 @@ class ProductionConfig(Config):
 
 config_by_name = dict(
     dev=DevelopmentConfig,
+    int=IntegrationConfig,
     test=TestingConfig,
     prod=ProductionConfig
 )
