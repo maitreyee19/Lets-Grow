@@ -1,15 +1,16 @@
 from .. import db
 
 
-class Post(db.Model):
+class Subcategory(db.Model):
     """ User Model for storing Posts related details """
     __tablename__ = 'posts'
 
     uuid = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(256), index=True)
-    body = db.Column(db.Text)
-    author_id = db.Column(db.Integer, db.ForeignKey('users.uuid'))
-    post_date = db.Column(db.Date)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.uuid'))
+    subcategory_name = db.Column(db.String(256), index=True)
+
+
+
 
     def __repr__(self):
         return '<Post %r>' % self.title
