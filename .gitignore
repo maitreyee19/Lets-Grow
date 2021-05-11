@@ -22,3 +22,6 @@ migrations/
 
 # mac related files
 .DS_Store
+
+#oidc json with secrets
+*oidc.json
