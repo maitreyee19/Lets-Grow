@@ -12,6 +12,8 @@ from oauthlib.oauth2 import WebApplicationClient
 import requests
 import json
 import os
+from .service.user_service import get_a_user
+
 
 basedir = os.path.abspath(os.path.dirname("manage.py"))
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -30,6 +32,16 @@ config = get_config()
 # OAuth 2 client setup
 client = WebApplicationClient(config["client_id"])
     # "1032839014332-44tte7j9ndhgl4hqtjaojhcq5sst6rse.apps.googleusercontent.com")
+
+def user_validation(emailAddress):
+    user = get_a_user(emailAddress)
+    if user is None:
+
+        return False
+    else:
+        return user
+
+
 
 
 
@@ -78,8 +90,15 @@ def callback():
         users_email = userinfo_response.json()["email"]
         picture = userinfo_response.json()["picture"]
         users_name = userinfo_response.json()["given_name"]
+        user = get_a_user(users_email)
+        if  user is not None:
+            print("user exists")
+        else:
+            print("register user")
+
     else:
         return( "User email not available or not verified by Google.", 400 )
     print("unique_id {} users_email {} picture {} users_name {} ".format(
         unique_id, users_email, picture, users_name))
     return ("welcom {}".format(users_name) , 200)
+
