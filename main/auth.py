@@ -91,8 +91,10 @@ def callback():
         picture = userinfo_response.json()["picture"]
         users_name = userinfo_response.json()["given_name"]
         user = get_a_user(users_email)
+        user.setUserLink(picture)
         if  user is not None:
             print("user exists")
+            print(user.userImageLink)
         else:
             print("register user")
 
