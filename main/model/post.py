@@ -9,7 +9,7 @@ class Post(db.Model):
     title = db.Column(db.String(256), index=True)
     body = db.Column(db.Text)
     author_id = db.Column(db.Integer, db.ForeignKey('users.uuid'))
-    #post_date = db.Column(db.Date)
+    post_date = db.Column(db.Date)
     # postLatitude = db.Column(db.Float(10, 9))
     # postLongitude = db.Column(db.Float(10, 9))
     # userLatitude = db.Column(db.Float(10, 9))

@@ -81,12 +81,14 @@ def callback():
         picture = userinfo_response.json()["picture"]
         users_name = userinfo_response.json()["given_name"]
         user = get_a_user(users_email)
-        user.setUserLink(picture)
+
         if user is not None:
             login_user(user)
+            # user.setUserLink(picture)
             session["user"] = users_email
             return redirect("http://127.0.0.1:3000/")
         else:
+
             session["user"] = users_email
             return redirect("http://127.0.0.1:3000/#/register")
 
@@ -94,11 +96,14 @@ def callback():
         return("User email not available or not verified by Google.", 400)
 
 @api.route('/userDetail')
-# @login_required
 class CurrentUser(Resource):
     @api.doc('Get current user Details')
     @api.marshal_list_with(UserDto.user, envelope='data')
     def get(self):
         '''List all cats'''
-        print (session["user"])
-        return session["user"]
+        user = ""
+        try:
+            user =  session["user"]
+        except:
+            print("no logged in user")
+        return user

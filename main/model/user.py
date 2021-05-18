@@ -12,8 +12,8 @@ class User(db.Model):
     email = db.Column(db.String(256), index=True, unique=True)
     lastLogin = db.Column(db.Date)
 
-    def __init__(self):
-        self.userImageLink = None
+    # def __init__(self):
+        # self.userImageLink = None
 
     # posts = db.relationship('Post', backref='author')
 
