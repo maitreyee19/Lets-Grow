@@ -41,8 +41,9 @@ class TopicsDto:
 class SubTopicsDto:
     subtopics_api = Namespace('subtopics', description='info about subcategory belongs to which category')
     subtopics = subtopics_api.model('subtopics', {
-        'topics_id': fields.String(required=True, description='category info'),
-        'subtopics_name': fields.String(required=True, description='details about subcategory')
+        'parent_topics_id': fields.Integer(required=True, description='parent id'),
+        'parent_topics_name':fields.String(required=True, description='parent topic name')
+
 
     })
 

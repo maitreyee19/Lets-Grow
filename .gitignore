@@ -17,6 +17,7 @@ build/
 backup/
 data.sqlite
 migrations/
+data_test.sqlite
 
 .vscode/
 
@@ -25,3 +26,5 @@ migrations/
 
 #oidc json with secrets
 *oidc.json
+#pycharm related files
+.idea

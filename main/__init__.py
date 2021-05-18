@@ -16,6 +16,7 @@ from .controller.user_controller import api as user_ns
 from .controller.post_controller import api as post_ns
 from .controller.agegroup_controller import api as ageGroup_ns
 from .controller.topics_controller import api as topics_ns
+from .controller.subtopics_controller import api as subtopics_ns
 from .service.dto import UserDto
 from .schema import schema
 from . import auth
@@ -40,6 +41,7 @@ def create_app(config_name):
     api.add_namespace(post_ns, path='/post')
     api.add_namespace(ageGroup_ns, path='/ageGroup')
     api.add_namespace(topics_ns, path='/topics')
+    api.add_namespace(subtopics_ns, path='/subtopics')
 
     app.add_url_rule(
         '/graphql',

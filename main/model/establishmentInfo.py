@@ -8,6 +8,7 @@ class Establishment(db.Model):
     uuid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
     type = db.Column(db.Integer, db.ForeignKey('organizationType.uuid'))
+
     address = db.Column(db.String(256))
     placeLongitude = db.Column(db.Float(10, 9))
     placeLatitude = db.Column(db.Float(10, 9))

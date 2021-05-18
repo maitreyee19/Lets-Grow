@@ -6,7 +6,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from main import create_app, db
 from main.model import User, Post
-from sql_scripts import create_ageGroup,create_establishment,create_topics
+from sql_scripts import create_ageGroup,create_establishment,create_topics,create_subtopics
 
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
 
@@ -50,7 +50,8 @@ def seed():
     # print(Post.query.all())
     #create_ageGroup(db.session)
     #create_establishment(db.session)
-    create_topics(db.session)
+    # create_topics(db.session)
+    # create_subtopics(db.session)
     db.session.commit()
 
 

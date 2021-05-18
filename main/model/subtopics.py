@@ -6,7 +6,9 @@ class Subtopics(db.Model):
     __tablename__ = 'sub_topics'
 
     uuid = db.Column(db.Integer, primary_key=True)
-    topics_id = db.Column(db.Integer, db.ForeignKey('topics.uuid'))
+    parent_topics_id = db.Column(db.Integer, db.ForeignKey('topics.uuid'))
+    #parent_topics_name = db.Column(db.String(256), db.ForeignKey('topics.topics_name'))
+
     subtopics_name = db.Column(db.String(256), index=True)
 
 
