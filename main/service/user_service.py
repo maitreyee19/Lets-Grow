@@ -31,7 +31,9 @@ def get_all_users():
 
 
 def get_a_user(email):
-    return User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email).first()
+    print("user:",user)
+    return user
 
 
 def save_changes(data):

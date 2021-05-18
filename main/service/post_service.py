@@ -2,20 +2,20 @@ import uuid
 from datetime import datetime
 
 from main import db
+from main.model import User
 from main.model.post import Post
 
 
 def save_new_post(data):
-    #post = Post.query.filter_by(title=data['title'], author_id=data['author_id']).first()
-    #if not post:
+    # post = Post.query.filter_by(title=data['title'], author_id=data['author_id']).first()
+    # if not post:
     new_post = Post(
         title=data['title'],
         body=data['body'],
         author_id=data['author_id'],
         post_date=datetime.now().date()
 
-
-        )
+    )
     save_changes(new_post)
     response_object = {
         'status': 'success',
@@ -31,7 +31,10 @@ def save_new_post(data):
 
 
 def get_all_posts():
-    return Post.query.all()
+    # post_data = Post.query.all()
+    post_data = db.session.query(Post, User).outerjoin(User, Post.author_id == User.uuid).all()
+    print(post_data)
+    return post_data
 
 
 def get_a_post(title):

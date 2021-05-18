@@ -1,13 +1,13 @@
 from .. import db
 
 
-class Subcategory(db.Model):
+class Subtopics(db.Model):
     """ User Model for storing Posts related details """
-    __tablename__ = 'posts'
+    __tablename__ = 'sub_topics'
 
     uuid = db.Column(db.Integer, primary_key=True)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.uuid'))
-    subcategory_name = db.Column(db.String(256), index=True)
+    topics_id = db.Column(db.Integer, db.ForeignKey('topics.uuid'))
+    subtopics_name = db.Column(db.String(256), index=True)
 
 
 

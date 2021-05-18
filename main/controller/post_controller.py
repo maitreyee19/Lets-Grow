@@ -7,12 +7,13 @@ from ..service.user_service import save_new_user, get_all_users, get_a_user
 
 api = PostDto.api
 _post = PostDto.post
+_post_user = PostDto.post_user
 
 
 @api.route('/')
 class PostList(Resource):
     @api.doc('list_of_all_posts')
-    @api.marshal_list_with(_post, envelope='data')
+    @api.marshal_list_with(_post_user, envelope='data')
     def get(self):
         """List all registered posts"""
         return get_all_posts()
@@ -26,7 +27,7 @@ class PostList(Resource):
         return save_new_post(data=data)
 
 
-@api.route('/post')
+@api.route('/<title>')
 @api.param('title', 'The post identifier')
 @api.response(404, 'post not found.')
 class User(Resource):
