@@ -16,6 +16,7 @@ from .controller.user_controller import api as user_ns
 from .controller.post_controller import api as post_ns
 from .controller.agegroup_controller import api as ageGroup_ns
 from .controller.topics_controller import api as topics_ns
+from .service.dto import UserDto
 from .schema import schema
 from . import auth
 
@@ -28,10 +29,11 @@ api = Api(
 
 def create_app(config_name):
     app = Flask(__name__)
+    app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
     api.init_app(app)
     app.config.from_object(config_by_name[config_name])
     db.init_app(app)
-    # flask_bcrypt.init_app(app)
+    flask_bcrypt.init_app(app)
 
     app.register_blueprint(auth.bp)
     api.add_namespace(user_ns, path='/user')
