@@ -1,13 +1,13 @@
 # Third-party libraries
 import os
 from flask import Flask, redirect, request, url_for, Blueprint, g, render_template, session
-from flask_restplus import Api
+from flask_restplus import Api , fields
 # import functools
 from flask_login import (
-    #     LoginManager,
-        current_user,
-        login_required,
-        login_user,
+    LoginManager,
+    current_user,
+    login_required,
+    login_user,
     #     logout_user,
 )
 from flask_restplus import Resource
@@ -15,14 +15,16 @@ from oauthlib.oauth2 import WebApplicationClient
 import requests
 import json
 from .service.user_service import get_a_user
-from main import UserDto
+# from main import UserDto
 
 
 basedir = os.path.abspath(os.path.dirname("manage.py"))
-bp = Blueprint('auth', __name__, url_prefix='/auth')
-api = Api(bp ,title='lets grow auth',
-    version='1.0',
-    description='A description',)
+auth = Blueprint('auth', __name__, url_prefix='/auth')
+
+api = Api(auth, title='lets grow auth',
+          version='1.0',
+          description='A description',)
+
 
 def get_config():
     with open(os.path.join(basedir, 'google-oidc.json'), 'r') as config_file:
@@ -40,7 +42,7 @@ config = get_config()
 client = WebApplicationClient(config["client_id"])
 
 
-@bp.route("/login")
+@auth.route("/login")
 def login():
 
     # Use library to construct the request for Google login and provide
@@ -50,7 +52,8 @@ def login():
                                              scope=["openid", "email", "profile"],)
     return redirect(request_uri)
 
-@bp.route("/callback")
+
+@auth.route("/callback")
 def callback():
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     # Get authorization code Google sent back to you
@@ -81,29 +84,38 @@ def callback():
         picture = userinfo_response.json()["picture"]
         users_name = userinfo_response.json()["given_name"]
         user = get_a_user(users_email)
-
+        print(user)
         if user is not None:
+            user.setID(user.uuid)
+            user.setUserLink(picture)
             login_user(user)
-            # user.setUserLink(picture)
-            session["user"] = users_email
-            return redirect("http://127.0.0.1:3000/")
+
+            # session["user"] = users_email
+            return redirect("http://letsgrow.com:3000/")
         else:
 
-            session["user"] = users_email
-            return redirect("http://127.0.0.1:3000/#/register")
+            # session["user"] = users_email
+            return redirect("http://letsgrow.com:3000/#/register")
 
     else:
         return("User email not available or not verified by Google.", 400)
 
+
+UserDto = api.model('user', {
+    'email': fields.String(required=True, description='user email address'),
+    'username': fields.String(required=True, description='user username'),
+    'userImageLink': fields.String(required=True, description='user image')
+})
+
+
 @api.route('/userDetail')
 class CurrentUser(Resource):
     @api.doc('Get current user Details')
-    @api.marshal_list_with(UserDto.user, envelope='data')
+    @api.marshal_list_with(UserDto, envelope='data')
     def get(self):
-        '''List all cats'''
-        user = ""
         try:
-            user =  session["user"]
+            user = current_user
+            print(current_user.name)
         except:
             print("no logged in user")
         return user

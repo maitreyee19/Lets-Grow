@@ -1,7 +1,7 @@
 from .. import db
+from flask_login import UserMixin
 
-
-class User(db.Model):
+class User(db.Model ,UserMixin):
 
     """ User Model for storing user related details """
     __tablename__ = 'users'
@@ -22,3 +22,6 @@ class User(db.Model):
 
     def setUserLink(self,imagePath):
         self.userImageLink = imagePath
+    
+    def setID(self,id):
+        self.id = id
