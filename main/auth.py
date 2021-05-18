@@ -1,27 +1,34 @@
 # Third-party libraries
-from flask import Flask, redirect, request, url_for ,Blueprint, g , render_template, session
-import functools
-# from flask_login import (
-#     LoginManager,
-#     current_user,
-#     login_required,
-#     login_user,
-#     logout_user,
-# )
+import os
+from flask import Flask, redirect, request, url_for, Blueprint, g, render_template, session
+from flask_restplus import Api
+# import functools
+from flask_login import (
+    #     LoginManager,
+        current_user,
+        login_required,
+        login_user,
+    #     logout_user,
+)
+from flask_restplus import Resource
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 import json
-import os
 from .service.user_service import get_a_user
+from main import UserDto
 
 
 basedir = os.path.abspath(os.path.dirname("manage.py"))
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+api = Api(bp ,title='lets grow auth',
+    version='1.0',
+    description='A description',)
 
 def get_config():
-    with open( os.path.join(basedir, 'google-oidc.json'), 'r') as config_file:
+    with open(os.path.join(basedir, 'google-oidc.json'), 'r') as config_file:
         config_data = json.load(config_file)
         return config_data
+
 
 def get_google_provider_cfg():
     return requests.get("https://accounts.google.com/.well-known/openid-configuration").json()
@@ -31,19 +38,6 @@ config = get_config()
 
 # OAuth 2 client setup
 client = WebApplicationClient(config["client_id"])
-    # "1032839014332-44tte7j9ndhgl4hqtjaojhcq5sst6rse.apps.googleusercontent.com")
-
-def user_validation(emailAddress):
-    user = get_a_user(emailAddress)
-    if user is None:
-
-        return False
-    else:
-        return user
-
-
-
-
 
 
 @bp.route("/login")
@@ -52,15 +46,13 @@ def login():
     # Use library to construct the request for Google login and provide
     # scopes that let you retrieve user's profile from Google
     request_uri = client.prepare_request_uri("https://accounts.google.com/o/oauth2/auth",
-                                                redirect_uri=request.url_root + "auth/callback",
-                                                scope=[
-                                                    "openid", "email", "profile"],
-                                                )
+                                             redirect_uri=request.url_root + "auth/callback",
+                                             scope=["openid", "email", "profile"],)
     return redirect(request_uri)
+
 
 @bp.route("/callback")
 def callback():
-    import os
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     # Get authorization code Google sent back to you
     code = request.args.get("code")
@@ -75,8 +67,7 @@ def callback():
         token_url,
         headers=headers,
         data=body,
-        auth=(config["client_id"] , config["client_secret"])
-        # "1032839014332-44tte7j9ndhgl4hqtjaojhcq5sst6rse.apps.googleusercontent.com","dMl6H-26baE8LRjmi71S7dGv"),
+        auth=(config["client_id"], config["client_secret"])
     )
 
     # Parse the tokens!
@@ -92,15 +83,23 @@ def callback():
         users_name = userinfo_response.json()["given_name"]
         user = get_a_user(users_email)
         user.setUserLink(picture)
-        if  user is not None:
-            print("user exists")
-            print(user.userImageLink)
+        if user is not None:
+            login_user(user)
+            session["user"] = users_email
+            return redirect("http://127.0.0.1:3000/")
         else:
-            print("register user")
+            session["user"] = users_email
+            return redirect("http://127.0.0.1:3000/#/register")
 
     else:
-        return( "User email not available or not verified by Google.", 400 )
-    print("unique_id {} users_email {} picture {} users_name {} ".format(
-        unique_id, users_email, picture, users_name))
-    return ("welcom {}".format(users_name) , 200)
+        return("User email not available or not verified by Google.", 400)
 
+@api.route('/userDetail')
+# @login_required
+class CurrentUser(Resource):
+    @api.doc('Get current user Details')
+    @api.marshal_list_with(UserDto.user, envelope='data')
+    def get(self):
+        '''List all cats'''
+        print (session["user"])
+        return session["user"]
