@@ -14,6 +14,8 @@ from .config import config_by_name
 from .db_connect import db
 from .controller.user_controller import api as user_ns
 from .controller.post_controller import api as post_ns
+from .controller.agegroup_controller import api as ageGroup_ns
+from .controller.topics_controller import api as topics_ns
 from .schema import schema
 from . import auth
 
@@ -34,6 +36,8 @@ def create_app(config_name):
     app.register_blueprint(auth.bp)
     api.add_namespace(user_ns, path='/user')
     api.add_namespace(post_ns, path='/post')
+    api.add_namespace(ageGroup_ns, path='/ageGroup')
+    api.add_namespace(topics_ns, path='/topics')
 
     app.add_url_rule(
         '/graphql',

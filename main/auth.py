@@ -95,6 +95,7 @@ def callback():
         if  user is not None:
             print("user exists")
             print(user.userImageLink)
+
         else:
             print("register user")
 
