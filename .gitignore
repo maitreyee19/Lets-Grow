@@ -28,3 +28,8 @@ data_test.sqlite
 *oidc.json
 #pycharm related files
 .idea
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
