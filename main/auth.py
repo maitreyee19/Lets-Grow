@@ -94,8 +94,8 @@ def callback():
             return redirect("http://letsgrow.com:3000/")
         else:
 
-            # session["user"] = users_email
-            return redirect("http://letsgrow.com:3000/#/register")
+            session["useremail"] = users_email
+            return redirect("http://letsgrow.com:3000/#/register?users_email="+users_email)
 
     else:
         return("User email not available or not verified by Google.", 400)
@@ -106,6 +106,20 @@ UserDto = api.model('user', {
     'username': fields.String(required=True, description='user username'),
     'userImageLink': fields.String(required=True, description='user image')
 })
+
+
+
+@api.route('/register')
+class Register(Resource):
+    @api.doc('Get current user Details')
+    @api.marshal_list_with(UserDto, envelope='data')
+    def get(self):
+        try:
+            user = current_user
+            print(current_user.name)
+        except:
+            print("no logged in user")
+        return user
 
 
 @api.route('/userDetail')

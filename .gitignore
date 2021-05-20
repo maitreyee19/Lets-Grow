@@ -12,6 +12,7 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+resetdbfordev.sh
 
 # backup related
 backup/
@@ -28,6 +29,8 @@ data_test.sqlite
 *oidc.json
 #pycharm related files
 .idea
+
+
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
