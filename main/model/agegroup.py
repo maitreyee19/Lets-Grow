@@ -9,4 +9,4 @@ class AgeGroup(db.Model):
     age_category = db.Column(db.String(256), index=True)
 
     def __repr__(self):
-        return '<Post %r>' % self.title
+        return '<Post %r>' % self.age_category

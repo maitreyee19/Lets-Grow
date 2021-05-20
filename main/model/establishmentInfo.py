@@ -15,4 +15,4 @@ class Establishment(db.Model):
     websiteInfo = db.Column(db.String(256))
 
     def __repr__(self):
-        return '<Post %r>' % self.title
+        return '<Post %r>' % self.name

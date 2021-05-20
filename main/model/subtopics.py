@@ -15,4 +15,4 @@ class Subtopics(db.Model):
 
 
     def __repr__(self):
-        return '<Post %r>' % self.title
+        return '<Post %r>' % self.subtopics_name

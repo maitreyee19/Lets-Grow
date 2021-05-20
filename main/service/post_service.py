@@ -13,6 +13,17 @@ def save_new_post(data):
         title=data['title'],
         body=data['body'],
         author_id=data['author_id'],
+        postLatitude =data['postLatitude'],
+        postLongitude = data['postLongitude'],
+        userLatitude = data ['userLatitude'],
+        userLongitude =data['userLongitude'],
+        topic_id =data['topic_id'],
+        subtopics_id =data['subtopics_id'],
+        age_group = data['age_group'],
+        establishmentInfo =data['establishmentInfo'],
+        establishmentType =data['establishmentType'],
+
+
         post_date=datetime.now().date()
 
     )
@@ -39,6 +50,7 @@ def get_all_posts():
 
 def get_a_post(title):
     return Post.query.filter_by(title=title).first()
+
 
 
 def save_changes(data):

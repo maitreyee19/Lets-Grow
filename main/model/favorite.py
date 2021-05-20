@@ -10,4 +10,4 @@ class Favorites(db.Model):
     creationDate = db.Column(db.Date)
 
     def __repr__(self):
-        return '<Post %r>' % self.title
+        return '<Post %r>' % self.follower_id

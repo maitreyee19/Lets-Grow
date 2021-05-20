@@ -11,4 +11,4 @@ class User_topics(db.Model):
     # posts = db.relationship('Post', backref='author')
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.topicsId

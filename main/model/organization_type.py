@@ -8,6 +8,5 @@ class TypeOfOrganization(db.Model):
     uuid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
 
-
     def __repr__(self):
-        return '<Post %r>' % self.title
+        return '<Post %r>' % self.name

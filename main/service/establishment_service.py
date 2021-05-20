@@ -3,6 +3,7 @@ import datetime
 
 from main import db
 from main.model.establishmentInfo import Establishment
+from main.model.organization_type import TypeOfOrganization
 
 
 def get_all_places():
@@ -14,4 +15,4 @@ def get_a_placeByName(name):
 
 
 def get_a_placeByType(name):
-    return Establishment.query.filter_by(type=name).first()
+    pass
