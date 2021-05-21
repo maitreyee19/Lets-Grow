@@ -1,7 +1,7 @@
 # Third-party libraries
 import os
 from flask import Flask, redirect, request, url_for, Blueprint, g, render_template, session
-from flask_restplus import Api, fields
+from flask_restplus import Api , fields
 # import functools
 from flask_login import (
     LoginManager,
@@ -14,8 +14,7 @@ from flask_restplus import Resource
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 import json
-from .service.user_service import get_a_user
-
+from main.service.user_service import get_a_user
 # from main import UserDto
 
 
@@ -24,7 +23,7 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 api = Api(auth, title='lets grow auth',
           version='1.0',
-          description='A description', )
+          description='A description',)
 
 
 def get_config():
@@ -94,8 +93,8 @@ def callback():
             return redirect("http://letsgrow.com:3000/")
         else:
 
-            # session["user"] = users_email
-            return redirect("http://letsgrow.com:3000/#/register")
+            session["useremail"] = users_email
+            return redirect("http://letsgrow.com:3000/#/register?users_email="+users_email)
 
     else:
         return ("User email not available or not verified by Google.", 400)
@@ -106,6 +105,20 @@ UserDto = api.model('user', {
     'username': fields.String(required=True, description='user username'),
     'userImageLink': fields.String(required=True, description='user image')
 })
+
+
+
+@api.route('/register')
+class Register(Resource):
+    @api.doc('Get current user Details')
+    @api.marshal_list_with(UserDto, envelope='data')
+    def get(self):
+        try:
+            user = current_user
+            print(current_user.name)
+        except:
+            print("no logged in user")
+        return user
 
 
 @api.route('/userDetail')
