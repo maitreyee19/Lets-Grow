@@ -1,7 +1,7 @@
 # Third-party libraries
 import os
 from flask import Flask, redirect, request, url_for, Blueprint, g, render_template, session
-from flask_restplus import Api , fields
+from flask_restplus import Api, fields
 # import functools
 from flask_login import (
     LoginManager,
@@ -15,6 +15,7 @@ from oauthlib.oauth2 import WebApplicationClient
 import requests
 import json
 from .service.user_service import get_a_user
+
 # from main import UserDto
 
 
@@ -23,7 +24,7 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 api = Api(auth, title='lets grow auth',
           version='1.0',
-          description='A description',)
+          description='A description', )
 
 
 def get_config():
@@ -44,12 +45,11 @@ client = WebApplicationClient(config["client_id"])
 
 @auth.route("/login")
 def login():
-
     # Use library to construct the request for Google login and provide
     # scopes that let you retrieve user's profile from Google
     request_uri = client.prepare_request_uri("https://accounts.google.com/o/oauth2/auth",
                                              redirect_uri=request.url_root + "auth/callback",
-                                             scope=["openid", "email", "profile"],)
+                                             scope=["openid", "email", "profile"], )
     return redirect(request_uri)
 
 
@@ -98,7 +98,7 @@ def callback():
             return redirect("http://letsgrow.com:3000/#/register")
 
     else:
-        return("User email not available or not verified by Google.", 400)
+        return ("User email not available or not verified by Google.", 400)
 
 
 UserDto = api.model('user', {

@@ -13,4 +13,4 @@ def get_all_subtopics():
 def get_subtopics_of_parentTopic(parent_topics_name):
     topic = Topics.query.filter_by(topics_name=parent_topics_name).first()
     print("topics:",topic)
-    Subtopics.query.filter_by(parent_topics_id=topic.uuid).first()
+    Subtopics.query.filter_by(parent_topics_id=topic.uuid).all()

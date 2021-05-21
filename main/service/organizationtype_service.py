@@ -9,5 +9,5 @@ def get_all_typeOfOrg():
     return TypeOfOrganization.query.all()
 
 
-def get_all_typeofOrg(name):
+def get_one_typeofOrg(name):
     return TypeOfOrganization.query.filter_by(name=name).first()

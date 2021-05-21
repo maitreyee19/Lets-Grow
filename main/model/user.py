@@ -11,6 +11,7 @@ class User(db.Model ,UserMixin):
     username = db.Column(db.String(256), unique=True)
     email = db.Column(db.String(256), index=True, unique=True)
     lastLogin = db.Column(db.Date)
+    registeredUser = db.Column(db.Boolean, default=False)
 
     # def __init__(self):
         # self.userImageLink = None

@@ -14,5 +14,7 @@ def get_a_placeByName(name):
     return Establishment.query.filter_by(name=name).first()
 
 
-def get_a_placeByType(name):
-    pass
+def get_type_of_org(name):
+    org = Establishment.query.filter_by(name=name).first()
+    print("org:",org)
+    TypeOfOrganization.query.filter_by(uuid=org.type).first()

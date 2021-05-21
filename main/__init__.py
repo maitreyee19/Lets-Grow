@@ -15,9 +15,11 @@ from .config import config_by_name
 from .db_connect import db
 from .controller.user_controller import api as user_ns
 from .controller.post_controller import api as post_ns
-from .controller.agegroup_controller import api as ageGroup_ns
+from .controller.agegroup_controller import api as agegroup_ns
 from .controller.topics_controller import api as topics_ns
-# from .controller.subtopics_controller import api as subtopics_ns
+from .controller.establishment_controller import api as place_ns
+from .controller.organizationtype_controller import api as placetype_ns
+from .controller.subtopics_controller import api as subtopics_ns
 from .service.dto import UserDto
 from .schema import schema
 from .auth import auth
@@ -42,9 +44,11 @@ def create_app(config_name):
     app.register_blueprint(auth)
     api.add_namespace(user_ns, path='/user')
     api.add_namespace(post_ns, path='/post')
-    api.add_namespace(ageGroup_ns, path='/ageGroup')
+    api.add_namespace(agegroup_ns, path='/age_group')
     api.add_namespace(topics_ns, path='/topics')
-    # api.add_namespace(subtopics_ns, path='/subtopics')
+    api.add_namespace(place_ns, path='/places')
+    api.add_namespace(placetype_ns, path='/typeofplace')
+    api.add_namespace(subtopics_ns, path='/subtopics')
 
     app.add_url_rule(
         '/graphql',

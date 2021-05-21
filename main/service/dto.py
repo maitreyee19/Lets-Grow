@@ -6,6 +6,7 @@ class UserDto:
     user = api.model('user', {
         'email': fields.String(required=True, description='user email address'),
         'username': fields.String(required=True, description='user username'),
+        'registeredUser': fields.Boolean(description='user registration'),
         'userImageLink': fields.String(description='user imageLink')
 
     })
@@ -50,8 +51,8 @@ class EstablishmentDto:
 
 
 class OrganizationType:
-    api = Namespace('post', description='Org Type')
-    orgType = api.model('establishment', {
+    org_api = Namespace('post', description='Org Type')
+    orgType = org_api.model('establishment', {
 
         # 'postDate': fields.Date(required=True, description='post date Information')
     })

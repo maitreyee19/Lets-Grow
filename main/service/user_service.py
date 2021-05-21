@@ -10,7 +10,8 @@ def save_new_user(data):
     if not user:
         new_user = User(
             email=data['email'],
-            username=data['username']
+            username=data['username'],
+            registeredUser=data['registeredUser']
         )
         save_changes(new_user)
         response_object = {
