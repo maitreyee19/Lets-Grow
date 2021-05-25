@@ -23,6 +23,7 @@ from .controller.subtopics_controller import api as subtopics_ns
 from .service.dto import UserDto
 from .schema import schema
 from .auth import auth
+from .dashboard import dashBoard
 
 # flask_bcrypt = Bcrypt()
 api = Api(
@@ -42,6 +43,7 @@ def create_app(config_name):
     # flask_bcrypt.init_app(app)
 
     app.register_blueprint(auth)
+    app.register_blueprint(dashBoard)
     api.add_namespace(user_ns, path='/user')
     api.add_namespace(post_ns, path='/post')
     api.add_namespace(agegroup_ns, path='/age_group')

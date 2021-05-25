@@ -1,4 +1,5 @@
 # Third-party libraries
+from main.model.user import User
 import os
 from flask import Flask, redirect, request, url_for, Blueprint, g, render_template, session
 from flask_restplus import Api , fields
@@ -15,6 +16,7 @@ from oauthlib.oauth2 import WebApplicationClient
 import requests
 import json
 from main.service.user_service import get_a_user
+from main import db
 # from main import UserDto
 
 
@@ -88,12 +90,22 @@ def callback():
             user.setID(user.uuid)
             user.setUserLink(picture)
             login_user(user)
-
+            print("current_user",current_user)
             # session["user"] = users_email
             return redirect("http://letsgrow.com:3000/")
         else:
 
             session["useremail"] = users_email
+            new_user = User(
+                email=users_email,
+                username=users_name,
+                registeredUser=False
+            )
+            new_user.setID(new_user.uuid)
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user)
+            print(current_user)
             return redirect("http://letsgrow.com:3000/#/register?users_email="+users_email)
 
     else:
@@ -112,7 +124,7 @@ UserDto = api.model('user', {
 class Register(Resource):
     @api.doc('Get current user Details')
     @api.marshal_list_with(UserDto, envelope='data')
-    def get(self):
+    def post(self):
         try:
             user = current_user
             print(current_user.name)
