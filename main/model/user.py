@@ -26,3 +26,4 @@ class User(db.Model, UserMixin):
 
     def setID(self, id):
         self.id = id
+
