@@ -50,8 +50,8 @@ def seed():
     # print(Post.query.all())
     #create_ageGroup(db.session)
     #create_establishment(db.session)
-    # create_topics(db.session)
-    # create_subtopics(db.session)
+    #create_topics(db.session)
+    create_subtopics(db.session)
     db.session.commit()
 
 

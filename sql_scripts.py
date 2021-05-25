@@ -163,15 +163,14 @@ def create_topics(session):
     print("inserting subtopics ")
 
     session.add_all([
+        Topics(topics_name='Kids Volunteering'),
         Topics(topics_name='Family and parenting'),
-
         Topics(topics_name='Arts and Crafts for kids'),
         Topics(topics_name='cooking'),
         Topics(topics_name='Books'),
         Topics(topics_name='Tutor'),
         Topics(topics_name='outDoor Activities'),
         Topics(topics_name='playDate'),
-        Topics(topics_name='Kids Volunteering'),
         Topics(topics_name='Online Resources'),
         Topics(topics_name='Games'),
         Topics(topics_name='Kids Health'),

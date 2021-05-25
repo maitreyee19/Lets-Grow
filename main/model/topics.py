@@ -2,7 +2,7 @@ from .. import db
 
 
 class Topics(db.Model):
-    """ User Model for different categories of posts """
+    """ User Model for different topics """
     __tablename__ = 'topics'
 
     uuid = db.Column(db.Integer, primary_key=True)
