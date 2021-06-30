@@ -8,7 +8,7 @@ from main import create_app, db
 from main.model import User, Post
 from sql_scripts import create_ageGroup,create_establishment,create_topics,create_subtopics
 
-app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
+app = create_app(os.getenv('BOILERPLATE_ENV') or 'int')
 
 app.app_context().push()
 
@@ -21,7 +21,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-    app.run()
+    app.run(host="0.0.0.0")
 
 
 @manager.command

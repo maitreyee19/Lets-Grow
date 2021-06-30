@@ -16,6 +16,7 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '../data.sqlite')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    REDIRECT_URL  = 'http://letsgrow.com:3000/'
     
 class IntegrationConfig(Config):
     # uncomment the line below to use postgres
@@ -24,6 +25,7 @@ class IntegrationConfig(Config):
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '../data.sqlite')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    REDIRECT_URL  = 'https://bhabanidas.com'
 
 
 class TestingConfig(Config):
@@ -32,6 +34,7 @@ class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '../data_test.sqlite')
     PRESERVE_CONTEXT_ON_EXCEPTION = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    REDIRECT_URL  = 'http://letsgrow.com:3000/'
 
 
 class ProductionConfig(Config):

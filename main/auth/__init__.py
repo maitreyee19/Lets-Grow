@@ -1,7 +1,7 @@
 # Third-party libraries
 from main.model.user import User
 import os
-from flask import Flask, redirect, request, url_for, Blueprint, g, render_template, session
+from flask import Flask, redirect, request, url_for, Blueprint, g, render_template, session , current_app
 from flask_restplus import Api , fields
 # import functools
 from flask_login import (
@@ -72,7 +72,8 @@ def callback():
         data=body,
         auth=(config["client_id"], config["client_secret"])
     )
-
+    
+    redirect_url = current_app.config["REDIRECT_URL"]
     # Parse the tokens!
     client.parse_request_body_response(json.dumps(token_response.json()))
     google_provider_cfg = get_google_provider_cfg()
@@ -91,8 +92,7 @@ def callback():
             user.setUserLink(picture)
             login_user(user)
             print("current_user",current_user)
-            # session["user"] = users_email
-            return redirect("http://letsgrow.com:3000/")
+            return redirect(redirect_url)
         else:
 
             session["useremail"] = users_email
@@ -106,7 +106,7 @@ def callback():
             db.session.commit()
             login_user(new_user)
             print(current_user)
-            return redirect("http://letsgrow.com:3000/#/register?users_email="+users_email)
+            return redirect(redirect_url+"/#/register?users_email="+users_email)
 
     else:
         return ("User email not available or not verified by Google.", 400)
