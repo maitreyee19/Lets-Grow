@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask , request
 try:
     from flask_restplus import Resource, Api
 except ImportError:
     import werkzeug
     werkzeug.cached_property = werkzeug.utils.cached_property
     from flask_restplus import Resource, Api
-from flask_bcrypt import Bcrypt
+# from flask_bcrypt import Bcrypt
 import graphene
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 from flask_graphql import GraphQLView
@@ -32,7 +32,7 @@ api = Api(
     description='API For Lets Grow',
 )
 
-def create_app(config_name):
+def create_app(config_name='int'):
     app = Flask(__name__)
     app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
     api.init_app(app)
@@ -69,10 +69,14 @@ def create_app(config_name):
     # if(config_name == 'dev'):
     @app.after_request
     def after_request(response):
-        response.headers.add('Access-Control-Allow-Origin', 'http://letsgrow.com:3000')
-        response.headers.add("Access-Control-Allow-Credentials" , "true")
-        response.headers.add("Access-Control-Allow-Headers", "*")
-        response.headers.add("Access-Control-Allow-Methods", "*")
+        whiteList = [ "https://bhabanidas.com" , "https://beta.kiribul.com" , "https://kiribul.com" , "https://api.kiribul.com"]
+        if request.referrer is not None :
+            r = request.referrer[:-1]
+            if r in whiteList:
+                response.headers.add('Access-Control-Allow-Origin', r)
+                response.headers.add("Access-Control-Allow-Credentials" , "true")
+                response.headers.add("Access-Control-Allow-Headers", "*")
+                response.headers.add("Access-Control-Allow-Methods", "*")
         return response
 
     @login_manager.user_loader

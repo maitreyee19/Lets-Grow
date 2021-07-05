@@ -3,13 +3,11 @@ aniso8601==7.0.0
 astroid==2.5.6
 attrs==20.3.0
 autopep8==1.5.7
-bcrypt==3.2.0
 certifi==2020.12.5
 cffi==1.14.5
 chardet==4.0.0
 click==7.1.2
 Flask==1.1.2
-Flask-Bcrypt==0.7.1
 Flask-GraphQL==2.0.1
 Flask-Login==0.5.0
 Flask-Migrate==2.7.0
@@ -24,6 +22,7 @@ graphql-relay==2.0.1
 graphql-server-core==1.2.0
 greenlet==1.0.0
 idna==2.10
+importlib-metadata==4.6.0
 isort==5.8.0
 itsdangerous==1.1.0
 Jinja2==2.11.3
@@ -32,11 +31,11 @@ lazy-object-proxy==1.6.0
 Mako==1.1.4
 MarkupSafe==1.1.1
 mccabe==0.6.1
-numpy==1.20.3
 oauthlib==3.1.0
 panda==0.3.1
 plotly==4.14.3
 promise==2.3
+psycopg2==2.9.1
 pycodestyle==2.7.0
 pycparser==2.20
 PyJWT==2.0.1
@@ -52,6 +51,10 @@ singledispatch==3.6.1
 six==1.15.0
 SQLAlchemy==1.4.11
 toml==0.10.2
+typed-ast==1.4.3
+typing-extensions==3.10.0.0
 urllib3==1.26.4
+waitress==2.0.0
 Werkzeug==1.0.1
 wrapt==1.12.1
+zipp==3.4.1

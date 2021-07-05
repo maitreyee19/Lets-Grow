@@ -25,7 +25,7 @@ class IntegrationConfig(Config):
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '../data.sqlite')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-    REDIRECT_URL  = 'https://bhabanidas.com'
+    REDIRECT_URL  = 'https://beta.kiribul.com'
 
 
 class TestingConfig(Config):
